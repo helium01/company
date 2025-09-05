@@ -23,6 +23,6 @@
 
         </div>
 
-        <a href="{{ route('kontak') }}" class="btn btn-primary rounded-pill mt-4">Lihat Semua Produk</a>
+        <a href="{{ route('catalog') }}" class="btn btn-primary rounded-pill mt-4">Lihat Semua Produk</a>
     </div>
 </section>
