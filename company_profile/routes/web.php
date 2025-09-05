@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AboutController;
-use App\Http\Controllers\kontakController;
+use App\Http\Controllers\KontakController;
 use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\GalleryController;
