@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kontak;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMail;
 
 class KontakController extends Controller
 {
