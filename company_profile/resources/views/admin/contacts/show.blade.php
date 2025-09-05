@@ -6,10 +6,16 @@
 
     <div class="card">
         <div class="card-body">
-            <h4>{{ $contact->name }}</h4>
+            <p><strong>Alamat:</strong> {{ $contact->alamat }}</p>
             <p><strong>Email:</strong> {{ $contact->email }}</p>
-            <p><strong>Telepon:</strong> {{ $contact->phone }}</p>
-            <p><strong>Pesan:</strong> {{ $contact->message }}</p>
+            <p><strong>Telepon:</strong> {{ $contact->telepon }}</p>
+            <p><strong>Google Maps:</strong>
+                @if($contact->maps)
+                <a href="{{ $contact->maps }}" target="_blank">{{ $contact->maps }}</a>
+                @else
+                <span class="text-muted">Tidak ada</span>
+                @endif
+            </p>
         </div>
     </div>
 

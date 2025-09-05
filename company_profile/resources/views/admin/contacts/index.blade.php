@@ -9,9 +9,10 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th>Nama</th>
+                <th>Alamat</th>
                 <th>Email</th>
                 <th>Telepon</th>
+                <th>Maps</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -19,9 +20,18 @@
             @foreach($contacts as $contact)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $contact->name }}</td>
+                <td>{{ $contact->alamat }}</td>
                 <td>{{ $contact->email }}</td>
-                <td>{{ $contact->phone }}</td>
+                <td>{{ $contact->telepon }}</td>
+                <td>
+                    @if($contact->maps)
+                    <a href="{{ $contact->maps }}" target="_blank" class="btn btn-sm btn-outline-info">
+                        Lihat Maps
+                    </a>
+                    @else
+                    <span class="text-muted">Tidak ada</span>
+                    @endif
+                </td>
                 <td>
                     <a href="{{ route('admin.contacts.show', $contact->id) }}" class="btn btn-info btn-sm">Lihat</a>
                     <a href="{{ route('admin.contacts.edit', $contact->id) }}" class="btn btn-warning btn-sm">Edit</a>

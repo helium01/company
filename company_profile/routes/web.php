@@ -24,6 +24,11 @@ Route::get('/tentang', function () {
 Route::get('/kontak', function () {
     return view('front.kontak'); // Kontak
 })->name('kontak');
+Route::get('/catalog', function () {
+    return view('front.catalog'); // Kontak
+})->name('catalog');
+
+Route::post('/contact/send', [KontakController::class, 'send'])->name('contact.send');
 
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {

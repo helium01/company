@@ -5,5 +5,5 @@
 @include('front.sections.features')
 @include('front.sections.products')
 @include('front.sections.about')
-@include('front.sections.testimonials')
+<!-- @include('front.sections.testimonials') -->
 @endsection

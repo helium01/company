@@ -9,7 +9,7 @@
                 berkualitas tinggi dengan harga kompetitif. Melayani pengiriman ke seluruh Indonesia dengan standar mutu
                 terbaik.
             </p>
-            <a href="{{ route('kontak') }}" class="btn btn-light text-primary rounded-pill me-2">
+            <a href="https://wa.me/+6282230478987" class="btn btn-light text-primary rounded-pill me-2">
                 Hubungi Kami
             </a>
             <a href="{{ route('produk') }}" class="btn btn-outline-light rounded-pill">
@@ -17,8 +17,10 @@
             </a>
         </div>
         <div class="col-md-6 text-center">
-            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/bf6ad4d4-79e7-477e-8af5-5360f61a100f.png"
-                class="img-fluid rounded shadow" alt="PT Sukses Plastik Nusantara - Pabrik Plastik" />
+            <img src="{{ asset('assets/img/home.png') }}"
+                class="img-fluid shadow-lg rounded-4 border border-3 border-primary"
+                alt="PT Sukses Plastik Nusantara - Pabrik Plastik"
+                style="width: 200%; max-width: 550px; height: 400px; object-fit: cover;" />
         </div>
     </div>
 </section>

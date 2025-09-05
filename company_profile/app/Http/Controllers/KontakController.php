@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kontak;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class KontakController extends Controller
 {
@@ -55,5 +56,18 @@ class KontakController extends Controller
     {
         $contact->delete();
         return redirect()->route('admin.contacts.index')->with('success', 'Kontak berhasil dihapus!');
+    }
+
+    public function send(Request $request)
+    {
+        $data = $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email',
+            'body'  => 'required|string',
+        ]);
+
+        Mail::to('sales@suksesplastiknusantara.com')->send(new ContactMail($data));
+
+        return back()->with('success', 'Pesan berhasil dikirim!');
     }
 }

@@ -7,20 +7,20 @@
     <form action="{{ route('admin.contacts.store') }}" method="POST">
         @csrf
         <div class="mb-3">
-            <label for="name">Nama</label>
-            <input type="text" name="name" class="form-control" id="name">
+            <label for="alamat">Alamat</label>
+            <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Masukkan alamat">
         </div>
         <div class="mb-3">
             <label for="email">Email</label>
-            <input type="email" name="email" class="form-control" id="email">
+            <input type="email" name="email" class="form-control" id="email" placeholder="Masukkan email">
         </div>
         <div class="mb-3">
-            <label for="phone">Telepon</label>
-            <input type="text" name="phone" class="form-control" id="phone">
+            <label for="telepon">Telepon</label>
+            <input type="text" name="telepon" class="form-control" id="telepon" placeholder="Masukkan nomor telepon">
         </div>
         <div class="mb-3">
-            <label for="message">Pesan</label>
-            <textarea name="message" class="form-control" id="message" rows="5"></textarea>
+            <label for="maps">Google Maps (URL)</label>
+            <input type="url" name="maps" class="form-control" id="maps" placeholder="Masukkan link Google Maps">
         </div>
         <button type="submit" class="btn btn-success">Simpan</button>
         <a href="{{ route('admin.contacts.index') }}" class="btn btn-secondary">Kembali</a>
