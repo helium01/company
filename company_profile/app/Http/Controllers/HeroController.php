@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 
 class HeroController extends Controller
 {
-    // untuk frontend
-
-    // untuk backend
     public function index()
     {
         $heroes = Hero::all();
@@ -23,7 +20,6 @@ class HeroController extends Controller
 
     public function store(Request $request)
     {
-        // dd("sampe sini");
         $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string',
@@ -33,7 +29,12 @@ class HeroController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('heroes', 'public');
+            $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+
+            // simpan langsung ke public/heroes
+            $request->file('image')->move(public_path('uploads/heroes'), $filename);
+
+            $data['image'] = 'heroes/' . $filename;
         }
 
         Hero::create($data);
@@ -62,11 +63,14 @@ class HeroController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('image')) {
-            // hapus gambar lama jika ada
-            if ($hero->image && file_exists(storage_path('app/public/' . $hero->image))) {
-                unlink(storage_path('app/public/' . $hero->image));
+            if ($hero->image && file_exists(public_path($hero->image))) {
+                unlink(public_path($hero->image));
             }
-            $data['image'] = $request->file('image')->store('heroes', 'public');
+
+            $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('heroes'), $filename);
+
+            $data['image'] = 'uploads/heroes' . $filename;
         }
 
         $hero->update($data);
@@ -76,8 +80,8 @@ class HeroController extends Controller
 
     public function destroy(Hero $hero)
     {
-        if ($hero->image && file_exists(storage_path('app/public/' . $hero->image))) {
-            unlink(storage_path('app/public/' . $hero->image));
+        if ($hero->image && file_exists(public_path($hero->image))) {
+            unlink(public_path($hero->image));
         }
 
         $hero->delete();
