@@ -2,43 +2,41 @@
 
 @section('content')
 <div class="container">
-    <h1>Daftar Kontak</h1>
-    <a href="{{ route('admin.contacts.create') }}" class="btn btn-primary mb-3">Tambah Kontak</a>
+    <h1 class="mb-4">Daftar Kontak</h1>
+
+    <a href="{{ route('admin.contacts.create') }}" class="btn btn-primary mb-3">+ Tambah Kontak</a>
 
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>#</th>
+                <th>Logo</th>
                 <th>Alamat</th>
-                <th>Email</th>
                 <th>Telepon</th>
+                <th>Email</th>
                 <th>Maps</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($contacts as $contact)
+            @foreach($contacts as $kontak)
             <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $contact->alamat }}</td>
-                <td>{{ $contact->email }}</td>
-                <td>{{ $contact->telepon }}</td>
                 <td>
-                    @if($contact->maps)
-                    <a href="{{ $contact->maps }}" target="_blank" class="btn btn-sm btn-outline-info">
-                        Lihat Maps
-                    </a>
+                    @if($kontak->image)
+                    <img src="{{ asset('storage/'.$kontak->image) }}" width="80" class="img-thumbnail">
                     @else
-                    <span class="text-muted">Tidak ada</span>
+                    <span class="text-muted">-</span>
                     @endif
                 </td>
+                <td>{{ $kontak->alamat }}</td>
+                <td>{{ $kontak->telepon }}</td>
+                <td>{{ $kontak->email }}</td>
+                <td><a href="{{ $kontak->maps }}" target="_blank">Lihat Maps</a></td>
                 <td>
-                    <a href="{{ route('admin.contacts.show', $contact->id) }}" class="btn btn-info btn-sm">Lihat</a>
-                    <a href="{{ route('admin.contacts.edit', $contact->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                    <form action="{{ route('admin.contacts.destroy', $contact->id) }}" method="POST" class="d-inline">
+                    <a href="{{ route('admin.contacts.edit', $kontak) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{{ route('admin.contacts.destroy', $kontak) }}" method="POST" class="d-inline"
+                        onsubmit="return confirm('Hapus kontak ini?')">
                         @csrf @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm"
-                            onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                     </form>
                 </td>
             </tr>

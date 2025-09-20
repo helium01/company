@@ -9,13 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('abouts', function (Blueprint $table) {
             $table->id();
-            $table->string('judul')->default('Tentang Kami');
-            $table->longText('isi')->nullable();
-            $table->string('gambar')->nullable(); // banner/foto perusahaan
+            $table->string('title')->default('Tentang Kami');
+            $table->longText('description')->nullable();
+            $table->string('visi_header')->default('Visi');
+            $table->longText('visi_content')->nullable();
+            $table->string('misi_header')->default('Misi');
+            $table->longText('misi_content')->nullable(); // bisa JSON / text dengan bullet
+            $table->string('image')->nullable(); 
             $table->timestamps();
         });
     }

@@ -14,5 +14,6 @@ class Kontak extends Model
         'telepon',
         'email',
         'maps',
+        'image',
     ];
 }

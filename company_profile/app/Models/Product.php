@@ -8,11 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+ // Nama tabel
+ protected $table = 'products';
 
-    protected $fillable = [
-        'nama',
-        'deskripsi',
-        'harga',
-        'gambar',
-    ];
+ // Kolom yang boleh diisi (mass assignment)
+ protected $fillable = [
+     'name',
+     'description',
+     'price',
+     'unit',
+     'image',
+     'is_active',
+ ];
+
+ // Casting data
+ protected $casts = [
+     'price' => 'decimal:2',
+     'is_active' => 'boolean',
+ ];
+ public function prices()
+{
+    return $this->hasMany(ProductPrice::class);
+}
 }

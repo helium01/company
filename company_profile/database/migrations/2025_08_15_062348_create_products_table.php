@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->text('deskripsi')->nullable();
-            $table->decimal('harga', 12, 2);
-            $table->string('gambar')->nullable(); // path gambar
+            $table->string('name'); // Nama produk, ex: Kantong Plastik
+            $table->text('description')->nullable(); // Deskripsi produk
+            $table->decimal('price', 15, 2)->default(0); // Harga dasar (misal Rp 15.000/kg)
+            $table->string('unit')->default('kg'); // Satuan, ex: kg, pcs, pack
+            $table->string('image')->nullable(); // Path atau URL gambar produk
+            $table->boolean('is_active')->default(true); // Status produk aktif/tidak
             $table->timestamps();
         });
     }

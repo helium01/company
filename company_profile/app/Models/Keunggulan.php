@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class About extends Model
+class Keunggulan extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'icon',
         'title',
         'description',
-        'visi_header',
-        'visi_content',
-        'misi_header',
-        'misi_content',
-        'image',
     ];
 }

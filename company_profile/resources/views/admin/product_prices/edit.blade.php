@@ -1,0 +1,43 @@
+@extends('admin.layouts.app')
+
+@section('content')
+<div class="container">
+    <h3>Edit Harga - {{ $product->name }}</h3>
+
+    <form action="{{ route('admin.product-prices.update', [$product->id, $price->id]) }}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <div class="mb-3">
+            <label class="form-label">Type</label>
+            <input type="text" name="type" class="form-control" value="{{ old('type', $price->type) }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ukuran</label>
+            <input type="text" name="ukuran" class="form-control" value="{{ old('ukuran', $price->ukuran) }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Isi (pcs)</label>
+            <input type="number" name="isi_pcs" class="form-control" value="{{ old('isi_pcs', $price->isi_pcs) }}"
+                required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Harga Ikat</label>
+            <input type="number" name="harga_ikat" class="form-control"
+                value="{{ old('harga_ikat', $price->harga_ikat) }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Harga Karung</label>
+            <input type="number" name="harga_karung" class="form-control"
+                value="{{ old('harga_karung', $price->harga_karung) }}" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{{ route('admin.product-prices.index', $product->id) }}" class="btn btn-secondary">Kembali</a>
+    </form>
+</div>
+@endsection

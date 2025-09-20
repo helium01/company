@@ -78,6 +78,18 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('admin.heroes.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-box"></i>
+                                <p>Hero</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.keunggulans.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-box"></i>
+                                <p>Keunggulan</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('admin.products.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-box"></i>
                                 <p>Produk</p>
@@ -126,7 +138,8 @@
 
         <!-- Footer -->
         <footer class="main-footer text-center">
-            <strong>© {{ date('Y') }} {{ config('app.name', 'Sukses Plastik Nusantara') }}.</strong> All rights reserved.
+            <strong>© {{ date('Y') }} {{ config('app.name', 'Sukses Plastik Nusantara') }}.</strong> All rights
+            reserved.
         </footer>
 
     </div>

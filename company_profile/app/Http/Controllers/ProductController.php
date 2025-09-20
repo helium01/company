@@ -4,68 +4,90 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::latest()->paginate(10);
+        $products = Product::all();
         return view('admin.products.index', compact('products'));
+    }
+    public function index_front()
+    {
+        $products = Product::where('is_active', 1)->get();
+    return view('front.produk', compact('products'));
     }
 
     public function create()
     {
         return view('admin.products.create');
     }
+    
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama' => 'required',
-            'harga' => 'required|numeric',
-            'gambar' => 'nullable|image|max:2048',
-        ]);
+        // $validated = $request->validate([
+        //     'description' => 'nullable|string',
+        //     'is_active'   => 'boolean',
+        // ]);
+        // dd($request);
+        $data = $request->all();
 
-        $data = $request->only(['nama', 'deskripsi', 'harga']);
-
-        if ($request->hasFile('gambar')) {
-            $data['gambar'] = $request->file('gambar')->store('produk', 'public');
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('products', 'public');
         }
-
+    
+        // Konversi checkbox ke 1/0
+        $data['is_active'] = $request->has('is_active') ? 1 : 0;
+    
         Product::create($data);
-
+    
         return redirect()->route('admin.products.index')->with('success', 'Produk berhasil ditambahkan!');
     }
 
-    public function edit(Product $product)
+    public function show($id)
     {
+        $product = Product::findOrFail($id);
+        return view('admin.products.show', compact('product'));
+    }
+
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
         return view('admin.products.edit', compact('product'));
     }
 
-    public function update(Request $request, Product $product)
-    {
-        $request->validate([
-            'nama' => 'required',
-            'harga' => 'required|numeric',
-            'gambar' => 'nullable|image|max:2048',
-        ]);
+    
 
-        $data = $request->only(['nama', 'deskripsi', 'harga']);
+public function update(Request $request, $id)
+{
+    $validated = $request->validate([
+        'name'        => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'price'       => 'required|numeric|min:0',
+        'unit'        => 'required|string|max:50',
+        'image'       => 'nullable|image|mimes:jpg,jpeg,png,gif',
+        'is_active'   => 'boolean',
+    ]);
 
-        if ($request->hasFile('gambar')) {
-            if ($product->gambar) Storage::disk('public')->delete($product->gambar);
-            $data['gambar'] = $request->file('gambar')->store('produk', 'public');
+    $product = Product::findOrFail($id);
+
+    if ($request->hasFile('image')) {
+        // hapus gambar lama jika ada
+        if ($product->image && \Storage::disk('public')->exists($product->image)) {
+            \Storage::disk('public')->delete($product->image);
         }
-
-        $product->update($data);
-
-        return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diperbarui!');
+        $validated['image'] = $request->file('image')->store('products', 'public');
     }
 
-    public function destroy(Product $product)
+    $product->update($validated);
+
+    return redirect()->route('admin.products.index')->with('success', 'Produk berhasil diperbarui!');
+}
+
+    public function destroy($id)
     {
-        if ($product->gambar) Storage::disk('public')->delete($product->gambar);
+        $product = Product::findOrFail($id);
         $product->delete();
 
         return redirect()->route('admin.products.index')->with('success', 'Produk berhasil dihapus!');
