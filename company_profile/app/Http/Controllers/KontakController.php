@@ -33,7 +33,7 @@ class KontakController extends Controller
             'telepon' => 'nullable|string',
             'email'   => 'nullable|email',
             'maps'    => 'nullable|string',
-            'image'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'image'   => 'nullable|image|mimes:jpg,jpeg,png',
         ]);
 
         if ($request->hasFile('image')) {
@@ -59,7 +59,7 @@ class KontakController extends Controller
             'telepon' => 'nullable|string',
             'email'   => 'nullable|email',
             'maps'    => 'nullable|string',
-            'image'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'image'   => 'nullable|image|mimes:jpg,jpeg,png',
         ]);
 
         if ($request->hasFile('image')) {
