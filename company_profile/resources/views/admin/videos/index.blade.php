@@ -22,7 +22,7 @@
             <td>{{ $i+1 }}</td>
             <td>
                 @if($p->gambar)
-                <img src="{{ asset('storage/'.$p->gambar) }}" width="60">
+                <img src="{{ asset($p->gambar) }}" width="60">
                 @endif
             </td>
             <td>{{ $p->nama }}</td>

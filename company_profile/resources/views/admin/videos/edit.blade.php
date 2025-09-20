@@ -20,7 +20,7 @@
         <div class="form-group mb-3">
             <label>Gambar</label><br>
             @if($product->gambar)
-            <img src="{{ asset('storage/'.$product->gambar) }}" width="100" class="mb-2">
+            <img src="{{ asset($product->gambar) }}" width="100" class="mb-2">
             @endif
             <input type="file" name="gambar" class="form-control">
         </div>

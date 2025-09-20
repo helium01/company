@@ -3,7 +3,7 @@
         <!-- Gambar ilustrasi perusahaan -->
         <div class="col-md-6 mb-4">
             @if($about && $about->image)
-            <img src="{{ asset('storage/'.$about->image) }}" class="img-fluid rounded shadow"
+            <img src="{{ asset($about->image) }}" class="img-fluid rounded shadow"
                 alt="{{ $about->title }}" />
             @else
             <img src="{{ asset('assets/img/logotentang.png') }}" class="img-fluid rounded shadow" alt="Tentang Kami" />

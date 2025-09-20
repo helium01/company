@@ -45,7 +45,7 @@
             <label>Gambar</label>
             <input type="file" name="image" class="form-control">
             @if($about->image)
-            <img src="{{ asset('storage/'.$about->image) }}" alt="" class="img-thumbnail mt-2" width="200">
+            <img src="{{ asset($about->image) }}" alt="" class="img-thumbnail mt-2" width="200">
             @endif
         </div>
 

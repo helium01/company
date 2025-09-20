@@ -30,7 +30,7 @@
             <label>Logo</label>
             <input type="file" name="image" class="form-control">
             @if($contact->image)
-            <img src="{{ asset('storage/'.$contact->image) }}" alt="Logo" class="img-thumbnail mt-2" width="150">
+            <img src="{{ asset($contact->image) }}" alt="Logo" class="img-thumbnail mt-2" width="150">
             @endif
         </div>
 

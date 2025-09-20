@@ -26,7 +26,7 @@
                 <td>{{ $hero->subtitle }}</td>
                 <td>
                     @if($hero->image)
-                    <img src="{{ asset('storage/' . $hero->image) }}" width="120" alt="Hero Image">
+                    <img src="{{ asset($hero->image) }}" width="120" alt="Hero Image">
                     @else
                     <span class="text-muted">-</span>
                     @endif

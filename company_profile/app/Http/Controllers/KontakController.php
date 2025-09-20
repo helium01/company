@@ -14,6 +14,7 @@ class KontakController extends Controller
         $contacts = Kontak::latest()->paginate(10);
         return view('admin.contacts.index', compact('contacts'));
     }
+
     public function index_front()
     {
         $kontak = Kontak::first();
@@ -28,21 +29,23 @@ class KontakController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'alamat' => 'nullable|string',
+            'alamat'  => 'nullable|string',
             'telepon' => 'nullable|string',
-            'email' => 'nullable|email',
-            'maps' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'email'   => 'nullable|email',
+            'maps'    => 'nullable|string',
+            'image'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('kontaks', 'public');
+            $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('uploads/kontaks'), $filename);
+            $data['image'] = 'uploads/kontaks/' . $filename;
         }
 
         Kontak::create($data);
 
         return redirect()->route('admin.contacts.index')->with('success', 'Kontak berhasil ditambahkan.');
-     }
+    }
 
     public function edit(Kontak $contact)
     {
@@ -52,19 +55,22 @@ class KontakController extends Controller
     public function update(Request $request, Kontak $contact)
     {
         $data = $request->validate([
-            'alamat' => 'nullable|string',
+            'alamat'  => 'nullable|string',
             'telepon' => 'nullable|string',
-            'email' => 'nullable|email',
-            'maps' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'email'   => 'nullable|email',
+            'maps'    => 'nullable|string',
+            'image'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
-            // hapus logo lama jika ada
-            if ($contact->image && file_exists(storage_path('app/public/' . $contact->image))) {
-                unlink(storage_path('app/public/' . $contact->image));
+            // hapus gambar lama jika ada
+            if ($contact->image && file_exists(public_path($contact->image))) {
+                unlink(public_path($contact->image));
             }
-            $data['image'] = $request->file('image')->store('kontaks', 'public');
+
+            $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('uploads/kontaks'), $filename);
+            $data['image'] = 'uploads/kontaks/' . $filename;
         }
 
         $contact->update($data);
@@ -73,13 +79,15 @@ class KontakController extends Controller
     }
 
     public function destroy(Kontak $contact)
-    {  if ($contact->image && file_exists(storage_path('app/public/' . $contact->image))) {
-        unlink(storage_path('app/public/' . $contact->image));
-    }
-    $contact->delete();
+    {
+        if ($contact->image && file_exists(public_path($contact->image))) {
+            unlink(public_path($contact->image));
+        }
 
-    return redirect()->route('admin.contacts.index')->with('success', 'Kontak berhasil dihapus.');
-}
+        $contact->delete();
+
+        return redirect()->route('admin.contacts.index')->with('success', 'Kontak berhasil dihapus.');
+    }
 
     public function send(Request $request)
     {

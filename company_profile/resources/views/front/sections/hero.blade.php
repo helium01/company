@@ -30,7 +30,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('{{ asset('storage/' . $hero->image) }}') center/cover no-repeat;
+            background: url('{{ asset( $hero->image) }}') center/cover no-repeat;
             opacity: 0.2; /* Transparansi gambar */
             z-index: 0;
         ">

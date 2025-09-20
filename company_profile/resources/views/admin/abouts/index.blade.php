@@ -27,7 +27,7 @@
                 <td>{{ Str::limit($about->misi_content, 50) }}</td>
                 <td>
                     @if($about->image)
-                    <img src="{{ asset('storage/'.$about->image) }}" alt="" width="100">
+                    <img src="{{ asset($about->image) }}" alt="" width="100">
                     @endif
                 </td>
                 <td>

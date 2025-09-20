@@ -11,6 +11,7 @@ class AboutController extends Controller
         $abouts = About::all();
         return view('admin.abouts.index', compact('abouts'));
     }
+
     public function index_front()
     {
         $about = About::first();
@@ -25,23 +26,25 @@ class AboutController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'visi_header' => 'nullable|string|max:255',
+            'title'        => 'required|string|max:255',
+            'description'  => 'nullable|string',
+            'visi_header'  => 'nullable|string|max:255',
             'visi_content' => 'nullable|string',
-            'misi_header' => 'nullable|string|max:255',
+            'misi_header'  => 'nullable|string|max:255',
             'misi_content' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('abouts', 'public');
+            $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('uploads/abouts'), $filename);
+            $data['image'] = 'uploads/abouts/' . $filename;
         }
 
         About::create($data);
 
         return redirect()->route('admin.abouts.index')->with('success', 'Data berhasil ditambahkan');
-     }
+    }
 
     public function edit(About $about)
     {
@@ -51,20 +54,24 @@ class AboutController extends Controller
     public function update(Request $request, About $about)
     {
         $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'visi_header' => 'nullable|string|max:255',
+            'title'        => 'required|string|max:255',
+            'description'  => 'nullable|string',
+            'visi_header'  => 'nullable|string|max:255',
             'visi_content' => 'nullable|string',
-            'misi_header' => 'nullable|string|max:255',
+            'misi_header'  => 'nullable|string|max:255',
             'misi_content' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
-            if ($about->image && \Storage::disk('public')->exists($about->image)) {
-                \Storage::disk('public')->delete($about->image);
+            // hapus file lama
+            if ($about->image && file_exists(public_path($about->image))) {
+                unlink(public_path($about->image));
             }
-            $data['image'] = $request->file('image')->store('abouts', 'public');
+
+            $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('uploads/abouts'), $filename);
+            $data['image'] = 'uploads/abouts/' . $filename;
         }
 
         $about->update($data);
@@ -74,11 +81,11 @@ class AboutController extends Controller
 
     public function destroy(About $about)
     {
-        if ($about->image && \Storage::disk('public')->exists($about->image)) {
-            \Storage::disk('public')->delete($about->image);
+        if ($about->image && file_exists(public_path($about->image))) {
+            unlink(public_path($about->image));
         }
 
         $about->delete();
         return redirect()->route('admin.abouts.index')->with('success', 'Data berhasil dihapus');
-   }
+    }
 }

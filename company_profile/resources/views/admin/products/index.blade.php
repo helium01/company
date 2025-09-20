@@ -26,7 +26,7 @@
                 <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                 <td>
                     @if($product->image)
-                    <img src="{{ asset('storage/'.$product->image) }}" width="50" class="img-thumbnail">
+                    <img src="{{ asset($product->image) }}" width="50" class="img-thumbnail">
                     @endif
                 </td>
                 <td>{{ $product->is_active ? 'Aktif' : 'Nonaktif' }}</td>

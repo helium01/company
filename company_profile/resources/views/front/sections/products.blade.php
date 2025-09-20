@@ -8,7 +8,7 @@
             <div class="col-md-4">
                 <div class="card product-card h-100">
                     @if($product->image)
-                    <img src="{{ asset('storage/'.$product->image) }}" class="card-img-top"
+                    <img src="{{ asset($product->image) }}" class="card-img-top"
                         style="max-width:100%; height:150px; object-fit:cover;" alt="{{ $product->name }}">
                     @else
                     <img src="{{ asset('assets/img/produk.png') }}" class="card-img-top"

@@ -34,7 +34,7 @@ class HeroController extends Controller
             // simpan langsung ke public/heroes
             $request->file('image')->move(public_path('uploads/heroes'), $filename);
 
-            $data['image'] = 'heroes/' . $filename;
+            $data['image'] = 'uploads/heroes/' . $filename;
         }
 
         Hero::create($data);
@@ -68,9 +68,9 @@ class HeroController extends Controller
             }
 
             $filename = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('heroes'), $filename);
+            $request->file('image')->move(public_path('uploads/heroes'), $filename);
 
-            $data['image'] = 'uploads/heroes' . $filename;
+            $data['image'] = 'uploads/heroes/' . $filename;
         }
 
         $hero->update($data);

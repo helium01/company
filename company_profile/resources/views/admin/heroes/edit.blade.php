@@ -23,7 +23,7 @@
         <div class="mb-3">
             <label for="image" class="form-label">Gambar</label><br>
             @if($hero->image)
-            <img src="{{ asset('storage/' . $hero->image) }}" width="150" class="mb-2">
+            <img src="{{ asset($hero->image) }}" width="150" class="mb-2">
             @endif
             <input type="file" name="image" class="form-control">
             @error('image') <small class="text-danger">{{ $message }}</small> @enderror

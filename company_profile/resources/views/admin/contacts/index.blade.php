@@ -22,7 +22,7 @@
             <tr>
                 <td>
                     @if($kontak->image)
-                    <img src="{{ asset('storage/'.$kontak->image) }}" width="80" class="img-thumbnail">
+                    <img src="{{ asset($kontak->image) }}" width="80" class="img-thumbnail">
                     @else
                     <span class="text-muted">-</span>
                     @endif
