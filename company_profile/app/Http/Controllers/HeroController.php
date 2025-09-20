@@ -32,9 +32,19 @@ class HeroController extends Controller
             $filename = time() . '_' . $request->file('image')->getClientOriginalName();
 
             // simpan langsung ke public/heroes
-            $request->file('image')->move(public_path('uploads/heroes'), $filename);
-
-            $data['image'] = 'uploads/heroes/' . $filename;
+            if (app()->environment('local')) {
+                // LOCAL: ke project/public/uploads
+                $request->file('image')->move(public_path('uploads/heroes'), $filename);
+                $data['image'] = 'uploads/heroes/' . $filename;
+            } else {
+                // SERVER: langsung ke public_html/uploads
+                $serverPath = '/home/sukj4448/public_html/uploads/heroes';
+                if (!file_exists($serverPath)) {
+                    mkdir($serverPath, 0775, true);
+                }
+                $request->file('image')->move($serverPath, $filename);
+                $data['image'] = 'uploads/heroes/' . $filename;
+            }
         }
 
         Hero::create($data);
@@ -68,9 +78,19 @@ class HeroController extends Controller
             }
 
             $filename = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('uploads/heroes'), $filename);
-
-            $data['image'] = 'uploads/heroes/' . $filename;
+            if (app()->environment('local')) {
+                // LOCAL: ke project/public/uploads
+                $request->file('image')->move(public_path('uploads/heroes'), $filename);
+                $data['image'] = 'uploads/heroes/' . $filename;
+            } else {
+                // SERVER: langsung ke public_html/uploads
+                $serverPath = '/home/sukj4448/public_html/uploads/heroes';
+                if (!file_exists($serverPath)) {
+                    mkdir($serverPath, 0775, true);
+                }
+                $request->file('image')->move($serverPath, $filename);
+                $data['image'] = 'uploads/heroes/' . $filename;
+            }
         }
 
         $hero->update($data);

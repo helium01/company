@@ -36,8 +36,19 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
             $filename = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('uploads/products'), $filename);
-            $data['image'] = 'uploads/products/' . $filename;
+            if (app()->environment('local')) {
+                // LOCAL: simpan ke project/public/uploads/products
+                $request->file('image')->move(public_path('uploads/products'), $filename);
+                $data['image'] = 'uploads/products/' . $filename;
+            } else {
+                // SERVER: simpan ke public_html/uploads/products
+                $serverPath = '/home/sukj4448/public_html/uploads/products';
+                if (!file_exists($serverPath)) {
+                    mkdir($serverPath, 0775, true);
+                }
+                $request->file('image')->move($serverPath, $filename);
+                $data['image'] = 'uploads/products/' . $filename;
+            }
         }
 
         // Konversi checkbox ke 1/0
@@ -79,8 +90,19 @@ class ProductController extends Controller
             }
 
             $filename = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('uploads/products'), $filename);
-            $validated['image'] = 'uploads/products/' . $filename;
+            if (app()->environment('local')) {
+                // LOCAL: simpan ke project/public/uploads/products
+                $request->file('image')->move(public_path('uploads/products'), $filename);
+                $data['image'] = 'uploads/products/' . $filename;
+            } else {
+                // SERVER: simpan ke public_html/uploads/products
+                $serverPath = '/home/sukj4448/public_html/uploads/products';
+                if (!file_exists($serverPath)) {
+                    mkdir($serverPath, 0775, true);
+                }
+                $request->file('image')->move($serverPath, $filename);
+                $data['image'] = 'uploads/products/' . $filename;
+            }
         }
 
         // Konversi checkbox ke 1/0

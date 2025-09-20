@@ -32,13 +32,24 @@ class AboutController extends Controller
             'visi_content' => 'nullable|string',
             'misi_header'  => 'nullable|string|max:255',
             'misi_content' => 'nullable|string',
-            'image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'image'        => 'nullable|image|mimes:jpg,jpeg,   png,webp|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
             $filename = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('uploads/abouts'), $filename);
-            $data['image'] = 'uploads/abouts/' . $filename;
+            if (app()->environment('local')) {
+                // LOCAL: simpan ke project/public/uploads/abouts
+                $request->file('image')->move(public_path('uploads/abouts'), $filename);
+                $data['image'] = 'uploads/abouts/' . $filename;
+            } else {
+                // SERVER: simpan ke public_html/uploads/abouts
+                $serverPath = '/home/sukj4448/public_html/uploads/abouts';
+                if (!file_exists($serverPath)) {
+                    mkdir($serverPath, 0775, true);
+                }
+                $request->file('image')->move($serverPath, $filename);
+                $data['image'] = 'uploads/abouts/' . $filename;
+            }
         }
 
         About::create($data);
@@ -70,8 +81,19 @@ class AboutController extends Controller
             }
 
             $filename = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('uploads/abouts'), $filename);
-            $data['image'] = 'uploads/abouts/' . $filename;
+            if (app()->environment('local')) {
+                // LOCAL: simpan ke project/public/uploads/abouts
+                $request->file('image')->move(public_path('uploads/abouts'), $filename);
+                $data['image'] = 'uploads/abouts/' . $filename;
+            } else {
+                // SERVER: simpan ke public_html/uploads/abouts
+                $serverPath = '/home/sukj4448/public_html/uploads/abouts';
+                if (!file_exists($serverPath)) {
+                    mkdir($serverPath, 0775, true);
+                }
+                $request->file('image')->move($serverPath, $filename);
+                $data['image'] = 'uploads/abouts/' . $filename;
+            }
         }
 
         $about->update($data);

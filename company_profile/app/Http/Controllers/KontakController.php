@@ -38,8 +38,23 @@ class KontakController extends Controller
 
         if ($request->hasFile('image')) {
             $filename = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('uploads/kontaks'), $filename);
-            $data['image'] = 'uploads/kontaks/' . $filename;
+            if ($request->hasFile('image')) {
+                $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+            
+                if (app()->environment('local')) {
+                    // LOCAL: simpan ke project/public/uploads/kontaks
+                    $request->file('image')->move(public_path('uploads/kontaks'), $filename);
+                    $data['image'] = 'uploads/kontaks/' . $filename;
+                } else {
+                    // SERVER: simpan ke public_html/uploads/kontaks
+                    $serverPath = '/home/sukj4448/public_html/uploads/kontaks';
+                    if (!file_exists($serverPath)) {
+                        mkdir($serverPath, 0775, true);
+                    }
+                    $request->file('image')->move($serverPath, $filename);
+                    $data['image'] = 'uploads/kontaks/' . $filename;
+                }
+            }
         }
 
         Kontak::create($data);
@@ -69,8 +84,23 @@ class KontakController extends Controller
             }
 
             $filename = time() . '_' . $request->file('image')->getClientOriginalName();
-            $request->file('image')->move(public_path('uploads/kontaks'), $filename);
-            $data['image'] = 'uploads/kontaks/' . $filename;
+            if ($request->hasFile('image')) {
+                $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+            
+                if (app()->environment('local')) {
+                    // LOCAL: simpan ke project/public/uploads/kontaks
+                    $request->file('image')->move(public_path('uploads/kontaks'), $filename);
+                    $data['image'] = 'uploads/kontaks/' . $filename;
+                } else {
+                    // SERVER: simpan ke public_html/uploads/kontaks
+                    $serverPath = '/home/sukj4448/public_html/uploads/kontaks';
+                    if (!file_exists($serverPath)) {
+                        mkdir($serverPath, 0775, true);
+                    }
+                    $request->file('image')->move($serverPath, $filename);
+                    $data['image'] = 'uploads/kontaks/' . $filename;
+                }
+            }
         }
 
         $contact->update($data);
