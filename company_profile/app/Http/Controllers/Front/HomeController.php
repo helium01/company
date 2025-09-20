@@ -7,7 +7,7 @@ use App\Models\Hero;
 use App\Models\Keunggulan;
 use App\Models\About;
 use App\Models\Kontak;
-use App\Models\product;
+use App\Models\Product;
 
 class HomeController extends Controller
 {
