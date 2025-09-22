@@ -37,6 +37,6 @@
             @endforelse
         </div>
 
-        <a href="{{ route('catalog') }}" class="btn btn-primary rounded-pill mt-4">Lihat Semua Produk</a>
+        <a href="{{ route('produk') }}" class="btn btn-primary rounded-pill mt-4">Lihat Semua Produk</a>
     </div>
 </section>

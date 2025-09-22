@@ -19,9 +19,9 @@ Route::get('/produk',[ProductController::class, 'index_front'])->name('produk');
 Route::get('/tentang',[AboutController::class, 'index_front'])->name('tentang');
 Route::get('/kontak',[KontakController::class, 'index_front'])->name('kontak');
 
-Route::get('/catalog', function () {
-    return view('front.catalog'); // Kontak
-})->name('catalog');
+// Route::get('/catalog', function () {
+//     return view('front.catalog'); // Kontak
+// })->name('catalog');
 
 Route::get('/products/{id}', [HomeController::class, 'show'])->name('catalog.show');
 
